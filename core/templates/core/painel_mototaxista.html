@@ -1,0 +1,108 @@
+{% load static %}
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>É Ligeiro - Página Inicial</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    header {
+      background-color: #ff6600;
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      height: 90px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      text-shadow: 1px 1px #00000022;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      color: white;
+      background-color: #ff6600;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e05500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: #ccc;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .btn {
+        width: 80%;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Substitua pelo caminho da sua logo -->
+    <img src="{% static 'logo.jpeg' %}" alt="Logo É Ligeiro">
+    <h1>É Ligeiro</h1>
+  </header>
+
+  {% block content %}
+  <h2>Painel do Mototaxista</h2>
+  <ul>
+    {% for corrida in corridas %}
+      <li>
+        {{ corrida.origem }} → {{ corrida.destino }}
+        <a href="{% url 'aceitar_corrida' corrida.id %}" class="btn btn-sm btn-primary">Aceitar</a>
+      </li>
+    {% empty %}
+      <li>Nenhuma corrida disponível.</li>
+    {% endfor %}
+  </ul>
+  {% endblock %}
+
+
+
+  <footer>
+    &copy; 2025 É Ligeiro. Todos os direitos reservados.
+  </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="W292" />
+          <option value="E302" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="main.texto_cotaccoes" />
+          <option value="main.valores_adicionar" />
+          <option value="main.exibir" />
+          <option value="main.Row" />
+          <option value="main.Z" />
+          <option value="main.page" />
+          <option value="main.flet" />
+          <option value="flet_core.page.add" />
+          <option value="main.i" />
+          <option value="main.botao1" />
+          <option value="main.protocolo" />
+          <option value="main.valor_protocolo" />
+          <option value="main.valor_protocolo2" />
+          <option value="docx.Document" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

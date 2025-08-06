@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+  {% block content %}
+  <h2>Painel do Cliente</h2>
+  <a href="{% url 'solicitar_corrida' %}" class="btn btn-warning">Solicitar Corrida</a>
+  <ul>
+    {% for corrida in corridas %}
+      <li>{{ corrida.origem }} → {{ corrida.destino }} ({{ corrida.status }})</li>
+    {% empty %}
+      <li>Nenhuma corrida encontrada.</li>
+    {% endfor %}
+  </ul>
+  {% endblock %}
+
+
+
+
+
+
+
+
+
