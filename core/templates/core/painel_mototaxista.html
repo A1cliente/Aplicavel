@@ -78,15 +78,26 @@
   </header>
 
   {% block content %}
-  <h2>Painel do Mototaxista</h2>
+  <h2>Corridas Pendentes</h2>
   <ul>
-    {% for corrida in corridas %}
+    {% for corrida in corridas_pendentes %}
       <li>
         {{ corrida.origem }} → {{ corrida.destino }}
         <a href="{% url 'aceitar_corrida' corrida.id %}" class="btn btn-sm btn-primary">Aceitar</a>
       </li>
     {% empty %}
-      <li>Nenhuma corrida disponível.</li>
+      <li>Nenhuma corrida pendente disponível.</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Minhas Corridas Aceitas</h2>
+  <ul>
+    {% for corrida in corridas_aceitas %}
+      <li>
+        {{ corrida.origem }} → {{ corrida.destino }} (Status: {{ corrida.status }})
+      </li>
+    {% empty %}
+      <li>Você não aceitou nenhuma corrida ainda.</li>
     {% endfor %}
   </ul>
   {% endblock %}
@@ -99,10 +110,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
