@@ -1,10 +1,115 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>É Ligeiro - Página Inicial</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f4f4f4;
+    }
+
+    img {
+      width: 400px; /* Largura desejada */
+      height: auto; /* Mantém a proporção da imagem */
+      border-radius: 20px; /* Borda arredondada */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombras opcionais */
+    }
+
+    header {
+      background-color: #ff6600;
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      /* height: 90px; */
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      text-shadow: 1px 1px #00000022;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      color: white;
+      background-color: #ff6600;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e05500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #222;
+      color: #ccc;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      .btn {
+        width: 80%;
+        font-size: 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h2>Até logo, espero te ver em breve!!</h2>
+
+     <!-- aqui fica o código do whatsapp -->
+    <a href="https://wa.me/5571984556226" target="_blank" class="whatsapp-button">Sugestões</a>
+    <style>
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+.whatsapp-button:hover {
+  background-color: #128c7e;
+}
+</style>
+
+    <!-- aqui fica o a imagem do centro -->
+    <img src="{% static 'logo2.jpeg' %}" alt="Logo É Ligeiro">
+
+
+  <footer>
+    &copy; 2025 É Ligeiro. Todos os direitos reservados.
+  </footer>
+
 </body>
 </html>

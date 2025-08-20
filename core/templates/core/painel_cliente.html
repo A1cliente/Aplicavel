@@ -1,17 +1,29 @@
 {% extends 'base.html' %}
 
+{% block content %}
+  <div class="container">
+    <h2>Painel do Cliente</h2>
 
-  {% block content %}
-  <h2>Painel do Cliente</h2>
-  <a href="{% url 'solicitar_corrida' %}" class="btn btn-warning">Solicitar Corrida</a>
-  <ul>
-    {% for corrida in corridas %}
-      <li>{{ corrida.origem }} → {{ corrida.destino }} ({{ corrida.status }})</li>
-    {% empty %}
-      <li>Nenhuma corrida encontrada.</li>
-    {% endfor %}
-  </ul>
-  {% endblock %}
+    <a href="{% url 'solicitar_corrida' %}" class="btn">Solicitar Corrida</a>
+
+    <div class="corridas">
+      {% if corridas %}
+        <ul>
+          {% for corrida in corridas %}
+            <li>
+              <strong>{{ corrida.origem }}</strong> → <strong>{{ corrida.destino }}</strong>
+              <span class="status">({{ corrida.status }})</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Nenhuma corrida encontrada.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+
 
 
 

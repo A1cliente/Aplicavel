@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa dos Motoboys</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS e JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Localização dos Motoboys Ativos</h2>
+    <div id="map"></div>
+
+    <script>
+        // Inicia o mapa no centro da sua cidade
+        var map = L.map('map').setView([-12.9714, -38.5014], 13); // Salvador como exemplo
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Busca os dados da view Django
+        fetch('/localizacao_motoboys/')
+            .then(response => response.json())
+            .then(data => {
+                data.motoboys.forEach(function(motoboy) {
+                    L.marker([motoboy.latitude, motoboy.longitude])
+                        .addTo(map)
+                        .bindPopup(motoboy.nome);
+                });
+            });
+    </script>
+</body>
+</html>

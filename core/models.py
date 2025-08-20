@@ -1,8 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+
+
 
 class Usuario(AbstractUser):
     TIPO_USUARIO = (
@@ -27,3 +28,14 @@ class Localizacao(models.Model):
 
     def __str__(self):
         return f'{self.usuario.username} - {self.latitude}, {self.longitude}'
+
+
+
+class Motoboy(models.Model):
+    username = models.CharField(max_length=100, unique=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    ativo = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.username

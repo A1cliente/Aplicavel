@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Segurança
 SECRET_KEY = 'django-insecure-sua-chave-secreta-aqui'  # Troque em produção
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['201.76.43.13','localhost','127.0.0.1']
 
 # Aplicativos instalados
 INSTALLED_APPS = [

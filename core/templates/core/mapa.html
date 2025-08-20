@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa dos Motoboys</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        #map { height: 600px; width: 100%; }
+        .legend {
+            background: white;
+            padding: 10px;
+            line-height: 24px;
+            color: #333;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <h2>Localização dos Motoboys Ativos</h2>
+    <div id="map"></div>
+
+    <script>
+        // Centraliza mapa no seu endereço
+        var map = L.map('map').setView([-12.5401, -38.2505], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var marcadores = {};
+        var rotas = {};
+        var cores = {};
+        var destinos = {};
+        var meuMarcador = null;
+        var minhaRota = null;
+        var historicoEu = [];
+
+        var iconeEu = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149059.png',
+            iconSize: [35, 35]
+        });
+
+        function corAleatoria() {
+            var letras = '0123456789ABCDEF';
+            var cor = '#';
+            for (var i = 0; i < 6; i++) {
+                cor += letras[Math.floor(Math.random() * 16)];
+            }
+            return cor;
+        }
+
+        function ajustarMapa() {
+            var todosMarcadores = Object.values(marcadores);
+            if (meuMarcador) todosMarcadores.push(meuMarcador);
+
+            if (todosMarcadores.length > 0) {
+                var group = new L.featureGroup(todosMarcadores);
+                map.fitBounds(group.getBounds().pad(0.2));
+            }
+        }
+
+        function moverSuave(marker, destino, duracao=10000) {
+            if (!destino) return;
+            var posAtual = marker.getLatLng();
+            var passo = 50; // ms
+            var dx = (destino[0] - posAtual.lat) / (duracao / passo);
+            var dy = (destino[1] - posAtual.lng) / (duracao / passo);
+            var i = 0;
+            var interval = setInterval(function() {
+                if (i >= duracao/passo) {
+                    clearInterval(interval);
+                    marker.setLatLng(destino);
+                    return;
+                }
+                marker.setLatLng([posAtual.lat + dx*i, posAtual.lng + dy*i]);
+                i++;
+            }, passo);
+        }
+
+        function atualizarMarcadores() {
+            fetch('/localizacao_motoboys/')
+                .then(response => response.json())
+                .then(data => {
+                    data.motoboys.forEach(function(motoboy) {
+                        var key = motoboy.nome;
+
+                        if (!cores[key]) cores[key] = corAleatoria();
+
+                        if (marcadores[key]) {
+                            destinos[key] = [motoboy.latitude, motoboy.longitude];
+                            moverSuave(marcadores[key], destinos[key]);
+                        } else {
+                            marcadores[key] = L.marker([motoboy.latitude, motoboy.longitude], {
+                                icon: L.icon({
+                                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                                    iconSize: [35,35]
+                                })
+                            }).addTo(map).bindPopup(key);
+                        }
+
+                        if (!rotas[key]) {
+                            rotas[key] = L.polyline([[motoboy.latitude, motoboy.longitude]], {
+                                color: cores[key],
+                                dashArray: '5,10'
+                            }).addTo(map);
+                        } else {
+                            var latlngs = rotas[key].getLatLngs();
+                            latlngs.push([motoboy.latitude, motoboy.longitude]);
+                            rotas[key].setLatLngs(latlngs);
+                        }
+                    });
+                    atualizarLegenda();
+                    ajustarMapa();
+                });
+        }
+
+        atualizarMarcadores();
+        setInterval(atualizarMarcadores, 10000);
+
+        function atualizarMinhaPosicao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+
+                    fetch('/atualizar_localizacao/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({ latitude: lat, longitude: lng })
+                    });
+
+                    if (meuMarcador) {
+                        moverSuave(meuMarcador, [lat, lng]);
+                    } else {
+                        meuMarcador = L.marker([lat, lng], {icon: iconeEu}).addTo(map).bindPopup('Você');
+                    }
+
+                    historicoEu.push([lat, lng]);
+                    if (!minhaRota) {
+                        minhaRota = L.polyline(historicoEu, {
+                            color: 'blue',
+                            dashArray: '5,10'
+                        }).addTo(map);
+                    } else {
+                        minhaRota.setLatLngs(historicoEu);
+                    }
+
+                    // Centraliza o mapa na sua posição
+                    map.setView([lat, lng], 16);
+                    ajustarMapa();
+                });
+            }
+        }
+
+        atualizarMinhaPosicao();
+        setInterval(atualizarMinhaPosicao, 10000);
+
+        var legenda = L.control({position: 'bottomright'});
+        legenda.onAdd = function(map) {
+            var div = L.DomUtil.create('div', 'legend');
+            div.innerHTML += '<span style="background:blue"></span> Você<br>';
+            for (var key in cores) {
+                div.innerHTML += '<span style="background:' + cores[key] + '"></span> ' + key + '<br>';
+            }
+            return div;
+        };
+        legenda.addTo(map);
+
+        function atualizarLegenda() {
+            legenda.remove();
+            legenda.addTo(map);
+        }
+    </script>
+</body>
+</html>

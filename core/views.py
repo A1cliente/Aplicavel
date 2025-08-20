@@ -6,10 +6,12 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
 from .forms import CadastroForm, CorridaForm
 from .models import Corrida, Usuario, Localizacao
 from django.contrib.auth.models import User
+from django.http import JsonResponse
+from .models import Motoboy
+from django.http import HttpResponse
 
 
 def index(request):
@@ -87,19 +89,23 @@ def aceitar_corrida(request, corrida_id):
 @login_required
 def atualizar_localizacao(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
+        if request.user.is_authenticated:
+            data = json.loads(request.body)
+            latitude = data.get('latitude')
+            longitude = data.get('longitude')
 
-        localizacao, created = Localizacao.objects.update_or_create(
-            usuario=request.user,
-            defaults={'latitude': latitude, 'longitude': longitude}
-        )
-        return JsonResponse({'status': 'ok'})
-    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=400)
+            Localizacao.objects.update_or_create(
+                usuario=request.user,
+                defaults={'latitude': latitude, 'longitude': longitude}
+            )
+            return JsonResponse({'status': 'ok'})
+        else:
+            return JsonResponse({'error': 'Usuário não autenticado'}, status=403)
 
+    return JsonResponse({'error': 'Método não permitido'}, status=405)
 
-def obter_localizacao_motoboy(request, username):
+# aqui fica a função que determina a localização do motoxiclista
+'''def obter_localizacao_motoboy(request, username):
     try:
         user = User.objects.get(username=username)
         localizacao = Localizacao.objects.get(usuario=user)
@@ -110,19 +116,39 @@ def obter_localizacao_motoboy(request, username):
         return JsonResponse(data)
     except (User.DoesNotExist, Localizacao.DoesNotExist):
         return JsonResponse({'erro': 'Motoboy não encontrado'}, status=404)
-
+'''
 
 def localizacao_motoboy(request, username):
-    return render(request, 'core/localizacao_motoboy.html', {'username': username})
+    return render(request, 'core/localizacao.html', {'username': username})
 
+def localizacao_motoboy_padrao(request):
+    # Exemplo: retorna a última localização registrada
+    motoboy = Motoboy.objects.last()
+    if motoboy:
+        return JsonResponse({'lat': motoboy.latitude, 'lng': motoboy.longitude})
+    return JsonResponse({'error': 'Motoboy não encontrado'}, status=404)
+
+def localizacao_motoboys_ativos(request):
+    localizacoes = Localizacao.objects.filter(usuario__tipo='mototaxista')
+
+    dados = []
+    for loc in localizacoes:
+        if loc.latitude is not None and loc.longitude is not None:
+            dados.append({
+                "nome": loc.usuario.username,
+                "latitude": loc.latitude,
+                "longitude": loc.longitude,
+            })
+
+    return JsonResponse({"motoboys": dados})
+def mapa_motoboys(request):
+    return render(request, 'core/mapa.html')
 
 def painel(request):
     return render(request, 'core/painel.html')
 
-
 def tela(request):
     return render(request, 'core/frente_tela.html')
-
 
 def sair(request):
     return render(request, 'core/fim.html')

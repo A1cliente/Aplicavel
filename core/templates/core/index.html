@@ -7,7 +7,23 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #ffe5b4;
+    }
+
+    .imagem-centro {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+
+    }
+
+    .imagem {
+      width: 350px;         /* LARGURA da imagem: altere como quiser */
+      height: auto;         /* Mantém a proporção automática */
+      border-radius: 20px;  /* Bordas arredondadas */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombras opcionais */
+
     }
 
     header {
@@ -71,22 +87,21 @@
   </style>
 </head>
 <body>
-
-
+ <!-- cabeçalho -->
   <header>
-    <!-- Substitua pelo caminho da sua logo -->
     <img src="{% static 'logo.jpeg' %}" alt="Logo É Ligeiro">
-    <h1>É Ligeiro</h1>
-
+    <!-- <h1>É Ligeiro</h1> -->
     <div class="container">
+      <a href='/mapa/' class="btn">Localização Moto</a>
       <a href='/login/' class="btn">Login</a>
       <a href='/cadastro/' class="btn">Cadastro</a>
-  </div>
+    </div>
   </header>
   <h2>Bem-vindo ao sistema de Moto Táxi!</h2>
-
-
-
+  <!-- Imagem do corpo do site -->
+    <div class="imagem-centro">
+      <img src="{% static 'logo2.jpeg' %}" alt="Imagem Central" class="imagem">
+    </div>
   <footer>
     &copy; 2025 É Ligeiro. Todos os direitos reservados.
   </footer>
