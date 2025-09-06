@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Segurança
 SECRET_KEY = 'django-insecure-sua-chave-secreta-aqui'  # Troque em produção
 DEBUG = True
-ALLOWED_HOSTS = ['201.76.43.13','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['eligeiro.com.br','www.eligeiro.com.br']
 
 # Aplicativos instalados
 INSTALLED_APPS = [
@@ -79,8 +79,13 @@ USE_TZ = True
 
 # Arquivos estáticos
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_DIRS = [
+	os.path.join(BASE_DIR, 'static'),
+]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Modelo de usuário personalizado
 AUTH_USER_MODEL = 'core.Usuario'
 
