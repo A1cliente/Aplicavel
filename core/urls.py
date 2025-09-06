@@ -3,6 +3,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from .views import MeuLoginView
 
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('mapa/', views.mapa_motoboys, name='mapa_motoboys'),
@@ -20,4 +21,5 @@ urlpatterns = [
     path('painel/', views.painel, name='painel'),
     path('frente_tela/', views.tela, name='tela'),
     path('fim/', views.sair, name='sair'),
+
 ]

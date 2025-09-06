@@ -5,6 +5,7 @@ from django.conf import settings
 
 
 
+
 class Usuario(AbstractUser):
     TIPO_USUARIO = (
         ('cliente', 'Cliente'),
@@ -39,3 +40,7 @@ class Motoboy(models.Model):
 
     def __str__(self):
         return self.username
+
+
+
+
