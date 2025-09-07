@@ -12,6 +12,9 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from .models import Motoboy
 from django.http import HttpResponse
+from django.shortcuts import render
+
+
 
 
 def index(request):
@@ -152,3 +155,4 @@ def tela(request):
 
 def sair(request):
     return render(request, 'core/fim.html')
+

@@ -3,48 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <title>É Ligeiro - Página Inicial</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
       background-color: #ff6600;
       color: white;
-      padding: 20px;
+      padding: 15px 30px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
     header img {
-      height: 90px;
+      height: 70px;
     }
 
     header h1 {
+      font-size: 28px;
       margin: 0;
-      font-size: 32px;
-      text-shadow: 1px 1px #00000022;
     }
 
-    .container {
-      text-align: center;
-      margin-top: 50px;
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #ff6600;
+    }
+
+    form p {
+      margin-bottom: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
     }
 
     .btn {
-      display: inline-block;
-      padding: 15px 30px;
-      margin: 10px;
+      width: 100%;
+      padding: 12px;
       font-size: 18px;
       color: white;
       background-color: #ff6600;
       border: none;
       border-radius: 8px;
-      text-decoration: none;
-      transition: 0.3s;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     .btn:hover {
@@ -56,15 +95,19 @@
       padding: 20px;
       background-color: #222;
       color: #ccc;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
+      font-size: 14px;
     }
 
-    /* Responsivo */
     @media (max-width: 600px) {
+      .card {
+        padding: 25px 20px;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+
       .btn {
-        width: 80%;
         font-size: 16px;
       }
     }
@@ -72,23 +115,25 @@
 </head>
 <body>
   <header>
-    <!-- Substitua pelo caminho da sua logo -->
     <img src="{% static 'logo.jpeg' %}" alt="Logo É Ligeiro">
     <h1>É Ligeiro</h1>
   </header>
 
-  {% block content %}
-  <h2>Cadastro</h2>
-  <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
-  </form>
-{% endblock %}
+  <main>
+    <div class="card">
+      {% block content %}
+        <h2>Cadastro</h2>
+        <form method="post">{% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn">Cadastrar</button>
+        </form>
+      {% endblock %}
+    </div>
+  </main>
 
   <footer>
     &copy; 2025 É Ligeiro. Todos os direitos reservados.
   </footer>
-
 </body>
 </html>
 

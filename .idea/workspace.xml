@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea749abb-d5f6-41a2-a9ce-bb8102bda729" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/templates/core/localizacao.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/logo2.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/fim.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/fim.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/localizacao_motoboy.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/painel_cliente.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/painel_cliente.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/painel_mototaxista.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/painel_mototaxista.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/templates/core/solicitar_corrida.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/solicitar_corrida.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/templates/core/cadastro.html" beforeDir="false" afterPath="$PROJECT_DIR$/core/templates/core/cadastro.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
@@ -41,6 +32,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="30iy7kxvMXluFNpZEiykNq5tEKv" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

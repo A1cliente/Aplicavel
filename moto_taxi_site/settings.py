@@ -7,7 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Segurança
 SECRET_KEY = 'django-insecure-sua-chave-secreta-aqui'  # Troque em produção
 DEBUG = True
+
 ALLOWED_HOSTS = ['eligeiro.com.br','www.eligeiro.com.br']
+
+ALLOWED_HOSTS = []
+
 
 # Aplicativos instalados
 INSTALLED_APPS = [
@@ -18,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+
 ]
 
 # Middleware
@@ -51,6 +56,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'moto_taxi_site.wsgi.application'
+
+
 
 # Banco de dados SQLite
 DATABASES = {
